@@ -6,14 +6,15 @@ public class Spec implements Runnable {
     public void run() {
         try {
             while (true) {
-                String call = ATS.atsQueue.poll();
+                String call = ATS.getAtsQueue().poll();
                 if (call != null) {
                     System.out.println(Thread.currentThread().getName() + " принял " + call);
                     Thread.sleep(TIME_TALK);
                     System.out.println(Thread.currentThread().getName() + " ответил на " + call + ".\n");
-                    ATS.readyCalls.incrementAndGet();
-                } else if (ATS.readyCalls.get() >= ATS.COUNT_CALLS) {
-                    ATS.readyCalls.incrementAndGet();
+//                    ATS.readyCalls.incrementAndGet();
+                    ATS.getReadyCalls().incrementAndGet();
+                } else if (ATS.getReadyCalls().get() >= ATS.COUNT_CALLS) {
+                    ATS.getReadyCalls().incrementAndGet();
                     System.out.println(Thread.currentThread().getName() + " Готово.");
                     break;
                 }
